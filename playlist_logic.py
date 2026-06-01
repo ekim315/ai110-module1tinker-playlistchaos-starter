@@ -116,7 +116,7 @@ def compute_playlist_stats(playlists: PlaylistMap) -> Dict[str, object]:
     chill = playlists.get("Chill", [])
     mixed = playlists.get("Mixed", [])
 
-    total = len(hype)
+    total = len(all_songs) # changed the var total to all_songs
     hype_ratio = len(hype) / total if total > 0 else 0.0
 
     avg_energy = 0.0
@@ -168,7 +168,7 @@ def search_songs(
 
     for song in songs:
         value = str(song.get(field, "")).lower()
-        if value and value in q:
+        if value and q in value: # changed this to look for the query in the value
             filtered.append(song)
 
     return filtered
@@ -184,8 +184,8 @@ def lucky_pick(
     elif mode == "chill":
         songs = playlists.get("Chill", [])
     # added mixed as a mode
-    elif mode == "mixed":
-        songs = playlists.get("Mixed", [])
+    # elif mode == "mixed":
+    #     songs = playlists.get("Mixed", [])
     else:
         songs = playlists.get("Hype", []) + playlists.get("Chill", []) + playlists.get("Mixed", [])
     return random_choice_or_none(songs)
@@ -194,7 +194,8 @@ def lucky_pick(
 def random_choice_or_none(songs: List[Song]) -> Optional[Song]:
     """Return a random song or None."""
     import random
-
+    if not songs:
+        return None
     return random.choice(songs)
 
 
