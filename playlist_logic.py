@@ -183,9 +183,11 @@ def lucky_pick(
         songs = playlists.get("Hype", [])
     elif mode == "chill":
         songs = playlists.get("Chill", [])
+    # added mixed as a mode
+    elif mode == "mixed":
+        songs = playlists.get("Mixed", [])
     else:
-        songs = playlists.get("Hype", []) + playlists.get("Chill", [])
-
+        songs = playlists.get("Hype", []) + playlists.get("Chill", []) + playlists.get("Mixed", [])
     return random_choice_or_none(songs)
 
 
